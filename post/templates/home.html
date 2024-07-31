@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+
+{% block content%}
+{%load static}
+ <h1 class="text-center">Tweet</h1>
+  
+ <div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+      {% for tweet in tweets %}
+ <div class="alert alert-dark " role="alert">
+ 
+           {{tweet.body}}<br>
+           <small class="text-muted">
+            {{tweet.created_at}} by {{tweet.user.username}} 
+           </small>
+           <br>
+           {% if tweet.user == user%}
+           <a href ="{% url 'edit' tweet.id%}" class="btn btn-primary">Edit</a>
+           <a href ="{% url 'delete' tweet.id%}" class="btn btn-danger">Delete</a>
+           {%endif%}
+</div><br><br>
+  
+ {%endfor%}
+    </div>
+    <div class="col">
+      {% if form %}
+ <form method="POST"  >
+  {% csrf_token %}
+ {{form.as_p}}
+  
+  <button type="submit" class="btn btn-primary">
+          tweet
+  </button>
+
+ </form>
+
+  {% endif %}
+    </div>
+   
+  </div>
+</div>
+ 
+
+ 
+{% endblock %}
